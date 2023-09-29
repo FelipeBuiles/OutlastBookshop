@@ -1,7 +1,9 @@
+import { useState, forwardRef } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import NextLink from "next/link";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useState } from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import {
   Hydrate,
   QueryClient,
@@ -15,6 +17,30 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+const LinkBehaviour = forwardRef<HTMLAnchorElement, any>(
+  function LinkBehaviour(props, ref) {
+    return <NextLink ref={ref} {...props} />;
+  },
+);
+
+const theme = createTheme({
+  palette: {
+    background: {
+      paper: "#39516c",
+    },
+  },
+  typography: {
+    fontFamily: "Futura",
+  },
+  components: {
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehaviour,
+      },
+    },
+  },
+});
+
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
@@ -27,10 +53,12 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <main>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </main>
+        <ThemeProvider theme={theme}>
+          <main>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </main>
+        </ThemeProvider>
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

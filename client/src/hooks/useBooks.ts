@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 const GUTENDEX_URL = "https://gutendex.com/books";
 
@@ -38,11 +38,23 @@ export const fetchBooks = async (page: number): Promise<BooksResponse> => {
   return res.json();
 };
 
+export const fetchBook = async (id: number): Promise<Book> => {
+  const res = await fetch(`${GUTENDEX_URL}/${id}`);
+  return res.json();
+};
+
 export const useBooks = () => {
   return useInfiniteQuery({
     queryKey: ["books"],
     queryFn: ({ pageParam = 1 }) => fetchBooks(pageParam),
     getNextPageParam: (lastPage) => lastPage.next?.split("=")[1],
-    // getPreviousPageParam: (lastPage) => lastPage.previous,
+  });
+};
+
+export const useBook = (id: number, initialData?: Book) => {
+  return useQuery({
+    queryKey: ["book", id],
+    queryFn: () => fetchBook(id),
+    initialData,
   });
 };
