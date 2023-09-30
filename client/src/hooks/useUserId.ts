@@ -1,18 +1,22 @@
 import { v4 as uuid } from "uuid";
-import useLocalStorage from "./useLocalStorage";
+import { useEffect, useState } from "react";
 
 const useUserId = () => {
-  const [userId, setUserId] = useLocalStorage("userId", "");
+  const [userId, setUserId] = useState("");
 
-  const defineUserId = () => {
-    if (!userId) {
+  useEffect(() => {
+    const stored = localStorage.getItem("userId");
+
+    if (!stored) {
       const newUserId = uuid();
       setUserId(newUserId);
-      return newUserId;
+      localStorage.setItem("userId", newUserId);
+    } else {
+      setUserId(stored);
     }
-  };
+  }, []);
 
-  return { userId, defineUserId };
+  return userId;
 };
 
 export default useUserId;

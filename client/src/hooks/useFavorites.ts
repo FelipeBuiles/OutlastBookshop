@@ -32,7 +32,7 @@ export const setFavorites = async (userId: string, books: number[]) => {
 };
 
 export const useFavorites = () => {
-  const { userId } = useUserId();
+  const userId = useUserId();
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["favorites", userId],
