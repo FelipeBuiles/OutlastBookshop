@@ -9,7 +9,6 @@ export class FavoritesController {
 
   @Post()
   create(@Body() createFavoriteDto: CreateFavoriteDto) {
-    console.log('controller', createFavoriteDto);
     return this.favoritesService.create(createFavoriteDto);
   }
 
@@ -23,6 +22,7 @@ export class FavoritesController {
     @Param('id') id: string,
     @Body() updateFavoriteDto: UpdateFavoriteDto,
   ) {
-    return this.favoritesService.update(id, updateFavoriteDto);
+    this.favoritesService.update(id, updateFavoriteDto);
+    return this.favoritesService.findOne(id);
   }
 }

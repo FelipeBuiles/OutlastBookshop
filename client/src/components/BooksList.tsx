@@ -41,7 +41,12 @@ export const BooksList = () => {
         <Typography variant="h6">Outlast Bookstore</Typography>
       </AppBar>
       <Container maxWidth="md">
-        <ImageList variant="masonry" cols={isMobile ? 2 : 5} gap={8}>
+        <ImageList
+          variant="masonry"
+          cols={isMobile ? 2 : 5}
+          gap={8}
+          sx={{ mt: 10 }}
+        >
           {data.pages.map((page) =>
             page.results.map((book) => <BookItem book={book} />),
           )}

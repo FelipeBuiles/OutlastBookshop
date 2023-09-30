@@ -17,6 +17,7 @@ import {
 import FavoriteIcon from "@/components/FavoriteIcon";
 import useIsMobile from "@/hooks/useIsMobile";
 import BackIcon from "@/components/BackIcon";
+import { useFavorites } from "@/hooks/useFavorites";
 
 interface Props {
   book: Book;
@@ -40,7 +41,14 @@ const BookDetails = (props: Props) => {
   const router = useRouter();
   const bookId = router.query?.id ? +router.query?.id : props.book.id;
   const { data } = useBook(bookId, props.book);
+  const { isFavorite, toggleFavorite } = useFavorites();
   const isMobile = useIsMobile();
+
+  const isBookFavorite = isFavorite(bookId);
+
+  const toggleFavoriteHandler = () => {
+    toggleFavorite(bookId);
+  };
 
   const goBack = () => {
     router.back();
@@ -104,6 +112,7 @@ const BookDetails = (props: Props) => {
               <Box sx={{ mt: 1 }}>
                 {data?.subjects?.map((subject) => (
                   <Chip
+                    key={subject}
                     label={subject}
                     sx={{ m: 0.2, fontSize: 10, color: "white" }}
                   />
@@ -111,8 +120,8 @@ const BookDetails = (props: Props) => {
               </Box>
             </CardContent>
             <CardActions>
-              <IconButton size="large">
-                <FavoriteIcon />
+              <IconButton size="large" onClick={toggleFavoriteHandler}>
+                <FavoriteIcon color={isBookFavorite ? "red" : "white"} />
               </IconButton>
             </CardActions>
           </Box>

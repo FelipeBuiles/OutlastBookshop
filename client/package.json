@@ -17,13 +17,15 @@
     "@tanstack/react-query": "^4.35.3",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "^4.35.3",
     "@tanstack/eslint-plugin-query": "^4.34.1",
+    "@tanstack/react-query-devtools": "^4.35.3",
     "@types/node": "latest",
     "@types/react": "latest",
+    "@types/uuid": "^9.0.4",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "prettier": "3.0.3",

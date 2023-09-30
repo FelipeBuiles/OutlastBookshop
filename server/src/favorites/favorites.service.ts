@@ -12,7 +12,7 @@ export class FavoritesService {
   }
 
   findOne(id: string) {
-    return this.lowdbService.findByUser(id);
+    return this.lowdbService.findByUser(id) ?? [];
   }
 
   update(id: string, updateFavoriteDto: UpdateFavoriteDto) {
